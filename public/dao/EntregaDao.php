@@ -1,12 +1,12 @@
 <?php
-class EntregaService {
+class EntregaDao {
     private $db;
     public function __construct() {
         $this->db = Banco::getConnection();
     }
 
     public function atualizarEntrega($entrega){
-        $entregaToUpdate = $db->entrega()->where("id === ?", $entrega["id"]);
+        $entregaToUpdate = $this->db->entrega()->where("id = ?", $entrega["id"]);
 
         if ($entregaToUpdate) {
             $entregaToUpdate["nomeRecebedor"] = $entrega["nomeRecebedor"];
@@ -20,9 +20,13 @@ class EntregaService {
     }
 
     public function removerEntrega($entregaId){
-        $deletedEntrega = $db->entrega()->where("id === ?", $entrega["id"])->delete();
+        $deletedEntrega = $this->db->entrega()->where("id = ?", $entrega["id"])->delete();
         
         return $deletedEntrega;
+    }
+
+    public function getEntregas(){
+        return $this->db->entrega();
     }
 }
 ?>
