@@ -37,7 +37,7 @@
                     return $response->withStatus(200)->write("Entrega atualizada!");
                 }
 
-                return $response->withStatus(500)->write("Erro ao atualizar entrega!");
+                return $response->withStatus(500)->write("Entrega não foi atualizada!");
             }
 
         });
@@ -52,7 +52,7 @@
                 return $response->withStatus(200)->write("Entrega removida!");
             }
 
-            return $response->withStatus(500)->write("Erro ao remover entrega!");
+            return $response->withStatus(500)->write("Entrega não foi removida!");
         });
 	} else {
         $app->add(new Tuupola\Middleware\HttpBasicAuthentication([

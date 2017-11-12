@@ -13,22 +13,14 @@ class EntregaDao {
             $dbEntrega["cpf_recebedor"] =  $entrega["cpf_recebedor"];
             $dbEntrega["data_entrega"] = date("Y-m-d H:i:s", $entrega["data_entrega"]);
 
-            if ($dbEntrega->update()) {
-                return true;
-            }
-
-            return false;
+            return $dbEntrega->update();
         }
         
         return false;
     }
 
-    public function removerEntrega($entregaId){
-        if ($this->db->entrega()->where("id", $entregaId)->delete()) {
-            return true;
-        }
-        
-        return false;
+    public function removerEntrega($entregaId){        
+        return $this->db->entrega()->where("id", $entregaId)->delete();
     }
 }
 ?>
