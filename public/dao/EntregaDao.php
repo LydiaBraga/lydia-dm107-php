@@ -6,27 +6,29 @@ class EntregaDao {
     }
 
     public function atualizarEntrega($entrega){
-        $entregaToUpdate = $this->db->entrega()->where("id = ?", $entrega["id"]);
+        $dbEntrega = $this->db->entrega()->where("id", $entrega["id"])->fetch();
 
-        if ($entregaToUpdate) {
-            $entregaToUpdate["nomeRecebedor"] = $entrega["nomeRecebedor"];
-            $entregaToUpdate["cpfRecebedor"] = $entrega["cpfRecebedor"];
-            $entregaToUpdate["dataEntrega"] = $entrega["dataEntrega"];    
+        if ($dbEntrega != false) {
+            $dbEntrega["nome_recebedor"] = $entrega["nome_recebedor"];
+            $dbEntrega["cpf_recebedor"] =  $entrega["cpf_recebedor"];
+            $dbEntrega["data_entrega"] = date("Y-m-d H:i:s", $entrega["data_entrega"]);
 
-            $entregaToUpdate->update();
+            if ($dbEntrega->update()) {
+                return true;
+            }
+
+            return false;
         }
-
-        return $entregaToUpdate;
+        
+        return false;
     }
 
     public function removerEntrega($entregaId){
-        $deletedEntrega = $this->db->entrega()->where("id = ?", $entrega["id"])->delete();
+        if ($this->db->entrega()->where("id", $entregaId)->delete()) {
+            return true;
+        }
         
-        return $deletedEntrega;
-    }
-
-    public function getEntregas(){
-        return $this->db->entrega();
+        return false;
     }
 }
 ?>
